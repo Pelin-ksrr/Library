@@ -20,5 +20,13 @@ class Book:
     def _return_book(self):
         self._is_available=True
 
+    def __str__(self):
+        return self.title
+    
+    def __repr__(self):
+        return self.title
+
 if __name__=="__main__":  # this code save from being executed when the model is imported as a module in another file
-    print("pelınnn")
+    print("pelinnn")
+
+    
