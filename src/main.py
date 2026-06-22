@@ -5,14 +5,11 @@ from library import Library
 def main():
     library = Library()
     
-    # Kitapları ekliyoruz (Arka planda otomatik alfabetik sıralanacaklar)
-    book1 = Book(1, "The Great Gatsby", "F. Scott Fitzgerald")
-    book2 = Book(2, "To Kill a Mockingbird", "Harper Lee")
-    book3 = Book(3, "1984", "George Orwell")
-    library.add_book(book1, book2, book3)
+    library.add_book("The Great Gatsby", "F. Scott Fitzgerald")
+    library.add_book("To Kill a Mockingbird", "Harper Lee")
+    library.add_book("1984", "George Orwell")
     
-    # NOT: active_members ve id_counter mantığını görseldeki gibi 
-    # 'Central System' yapmak için library.py içine taşıdık!
+    
 
     while True:
         print("\n***Library Management System***")
@@ -31,7 +28,7 @@ def main():
             print("Select member type:\n1- Standard\n2- Student\n3- VIP")
             member_type = input("Enter your choice (1-3): ")
             
-            # Üye kaydetme işini tamamen kütüphanenin merkezine bıraktık
+            
             new_member = library.register_member(name, member_type)
             
             if new_member is not None:
@@ -43,16 +40,18 @@ def main():
             print("\n--- Borrow a Book ---")
             member_name = input("Enter member name: ").lower()
             
-            # Üye kütüphanede kayıtlı mı kontrolü
+            
             if member_name in library.members:
-                print(f"Available books: {library.books}")
+                #print(f"Available books: {library.books}")
+                only_available=[book for book in library.books if book.is_available]
+                print(f"available books:{only_available}")
                 book_title = input("Enter the exact title of the book to borrow: ")
                 
                 # binary search
                 target_book = library.search_book_binary(book_title)
                 
                 if target_book:
-                    # Ödünç alma mantığını merkezi sisteme yaptırıyoruz
+                    # logic of borrowing
                     member = library.members[member_name]
                     library.borrow_book(member, target_book)
                 else:
